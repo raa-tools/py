@@ -3,16 +3,16 @@ import os
 import sys
 
 
-def main(directory, fileToOpen, outputSubDir):
+def main(pathToFile, outputSubDir):
     """
     Main function that separates content
 
     Uses a couple of helper functions
     Takes in directory, file to open, and output folder as params
     """
-    os.chdir(directory)
+    os.chdir(os.path.dirname(pathToFile))
 
-    with open(fileToOpen, 'rU') as readFile: #.txt file
+    with open(os.path.basename(pathToFile), 'rU') as readFile: #.txt file
         inputTextList = readFile.readlines() #Returns a list
 
     inputTextList = [text for text in inputTextList if text != "\n"]
@@ -88,7 +88,7 @@ def writeFile(pathToFile, itemsInFile):
 
 # Portion that runs the functions
 while True:
-    workingDir, fileName = "", " "
+    filePath = ""
 
     print("\n-------------------------------------")
     print("Separate a big .txt file into parts.")
@@ -96,18 +96,11 @@ while True:
     print('Enter "x" at anytime to quit.')
     print("--------------------------------------")
 
-    # Get path from user
-    while workingDir != "x" and not os.path.exists(workingDir):
-        workingDir = getInput("Specify path:")
+    # Get filePath from user
+    while filePath != "x" and not os.path.exists(filePath):
+        filePath = getInput("Specify filepath:")
 
-    if workingDir == "x":
-        break
-
-    # Get filename from user
-    while fileName != "x" and not os.path.exists(os.path.join(workingDir, fileName)):
-        fileName = getInput("File name:")
-
-    if fileName == "x":
+    if filePath == "x":
         break
 
     # Let user specify subfolder
@@ -115,4 +108,4 @@ while True:
     if subFolder == "x":
         break
 
-    main(workingDir, fileName, subFolder)
+    main(filePath, subFolder)
