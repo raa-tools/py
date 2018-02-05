@@ -3,7 +3,7 @@ import os
 import sys
 
 
-def main(directory, fileToOpen):
+def main(directory, fileToOpen, outputSubDir):
     """
     Main function that separates content
 
@@ -25,7 +25,7 @@ def main(directory, fileToOpen):
                    for i in range(len(codeIndex)-1)}
 
     for key in contentDict:
-        pathName = makeFolderName(key)
+        pathName = makeFolderName(key, outputSubDir)
         makeFolder(pathName)
         
         title = contentDict[key][0].replace("\n", "")
@@ -48,55 +48,23 @@ def main(directory, fileToOpen):
         writeFile(titlePath, title)
 
 
-def writeFile(pathToFile, itemsInFile):
-    with open(pathToFile, "w") as wFile:
-        for item in itemsInFile:
-            wFile.write(item)
-        
-        # Report back file name from pathToFile
-        print("File {} written".format(os.path.basename(pathToFile)))
-
 # Helper functions
-def getPath():
+def getInput(prompt):
     """
-    Get path using 2 different input methods (Py 3.X vs 2.X)
+    Return user input using 2 different methods (Py 3.X vs 2.X)
     """
-    return input("Specify path: ") if sys.version_info[0] >= 3 else raw_input("Specify path: ")
+    return input("{} ".format(prompt)) if sys.version_info[0] >= 3 else raw_input("{} ".format(prompt))
 
 
-def getFileName():
+def makeFolderName(fileName, subDir):
     """
-    Get path using 2 different input methods (Py 3.X vs 2.X)
-    """
-    return input("File name: ") if sys.version_info[0] >= 3 else raw_input("File name: ")
-
-
-def readFile(workingDir, fileName):
-    """
-    Check if file name the user input exists or not
-    """
-    if not os.path.exists(os.path.join(workingDir, fileName)):
-        print("File doesn't exist")
-    
-    else:
-        main(workingDir, fileName)
-
-
-def makeFolderName(fileName):
-    """
-    Function to make folders based on file name
-    Returns a path to be used by makeFolder() function
-
-    Currently a little inconsistent with how it treats exhibits
+    Function to make generate folder name based on file name
+    Path is exhibitCode/userDefinedSubfolder
     """
 
     exhibit, topic, story = fileName.split("_")
 
-    if exhibit == "TH":
-        return "{}/".format(exhibit)
-
-    elif exhibit == "TL":
-        return "{}/NC/".format(exhibit)
+    return "{}/{}/".format(exhibit, subDir)
 
 
 def makeFolder(folderPath):
@@ -109,20 +77,42 @@ def makeFolder(folderPath):
         os.makedirs(folderPath)
 
 
-# Portion that runs the functions below
+def writeFile(pathToFile, itemsInFile):
+    with open(pathToFile, "w") as wFile:
+        for item in itemsInFile:
+            wFile.write(item)
+        
+        # Report back file name from pathToFile
+        print("File {} written".format(os.path.basename(pathToFile)))
+
+
+# Portion that runs the functions
 while True:
+    workingDir, fileName = "", " "
+
     print("------------------------------------")
-    print("Separate a big .txt file into parts.\nSome stuff still specific to NVMM.\n")
+    print("Separate a big .txt file into parts.")
+    print("Some stuff still specific to NVMM.\n")
     print('Enter "x" at anytime to quit.')
     print("------------------------------------")
-    workingDir = getPath()
-    
+
+    # Get path from user
+    while workingDir != "x" and not os.path.exists(workingDir):
+        workingDir = getInput("Specify path:")
+
     if workingDir == "x":
         break
 
-    fileName = getFileName()
+    # Get filename from user
+    while fileName != "x" and not os.path.exists(os.path.join(workingDir, fileName)):
+        fileName = getInput("File name:")
 
     if fileName == "x":
         break
 
-    readFile(workingDir, fileName)
+    # Let user specify subfolder
+    subFolder = str(getInput("Output subfolder name (press enter for none):"))
+    if subFolder == "x":
+        break
+
+    main(workingDir, fileName, subFolder)
