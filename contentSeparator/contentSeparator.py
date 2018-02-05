@@ -90,7 +90,7 @@ def writeFile(pathToFile, itemsInFile):
 while True:
     workingDir, fileName = "", " "
 
-    print("------------------------------------")
+    print("\n------------------------------------")
     print("Separate a big .txt file into parts.")
     print("Some stuff still specific to NVMM.\n")
     print('Enter "x" at anytime to quit.')
