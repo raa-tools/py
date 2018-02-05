@@ -111,7 +111,7 @@ while True:
         break
 
     # Let user specify subfolder
-    subFolder = str(getInput("Output subfolder name (press enter for none):"))
+    subFolder = getInput("Output subfolder (press enter for none):")
     if subFolder == "x":
         break
 
