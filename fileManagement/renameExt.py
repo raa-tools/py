@@ -3,9 +3,9 @@ Use to rename extensions for uniformity in a dir.
 Doesn't reformat file to new file type.
 """
 
+from __future__ import print_function
 import os
 import sys
-from __future__ import print_function
 
 def checkExtension(newExt):
     """
