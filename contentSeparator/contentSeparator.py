@@ -1,19 +1,86 @@
+from __future__ import print_function
 import os
+import sys
 
-# Remember to change directory
-os.chdir("/Users/jesentanadi/Desktop/Ohio Test/Script")
 
-with open("_TL_V.txt", 'rU') as readFile: #.txt file
-    inputTextList = readFile.readlines() #Returns a list
+def main(directory, fileToOpen):
+    """
+    Main function that separates content
 
-inputTextList = [text for text in inputTextList if text != "\n"]
+    Uses a couple of helper functions
+    Takes in directory & file to open as params
+    """
+    os.chdir(directory)
 
-codeIndex = [index for index, entry in enumerate(inputTextList) if "_" in entry]
-codeIndex.append(len(inputTextList))
+    with open(fileToOpen, 'rU') as readFile: #.txt file
+        inputTextList = readFile.readlines() #Returns a list
 
-contentDict = {inputTextList[codeIndex[i]].replace("\n", "").split(" ")[0] : \
-               inputTextList[codeIndex[i]+1:codeIndex[i+1]] \
-               for i in range(len(codeIndex)-1)}
+    inputTextList = [text for text in inputTextList if text != "\n"]
+
+    codeIndex = [index for index, entry in enumerate(inputTextList) if "_" in entry]
+    codeIndex.append(len(inputTextList))
+
+    contentDict = {inputTextList[codeIndex[i]].replace("\n", "").split(" ")[0] : \
+                   inputTextList[codeIndex[i]+1:codeIndex[i+1]] \
+                   for i in range(len(codeIndex)-1)}
+
+    for key in contentDict:
+        pathName = makeFolderName(key)
+        makeFolder(pathName)
+        
+        title = contentDict[key][0].replace("\n", "")
+
+        # Exhibit titles don't have body copy
+        if "ti" in key.split("_")[2]:
+            titlePath = os.path.join(pathName, key.upper() + ".txt")
+
+        # Everything else is separated into a story title & story body file
+        else:
+            body = contentDict[key][1:]
+
+            titlePath = os.path.join(pathName, key.upper() + "-T.txt")
+            bodyPath = os.path.join(pathName, key.upper() + "-B.txt")
+
+            # Write body file
+            writeFile(bodyPath, body)
+
+        # Write title file.
+        writeFile(titlePath, title)
+
+
+def writeFile(pathToFile, itemsInFile):
+    with open(pathToFile, "w") as wFile:
+        for item in itemsInFile:
+            wFile.write(item)
+        
+        # Report back file name from pathToFile
+        print("File {} written".format(os.path.basename(pathToFile)))
+
+# Helper functions
+def getPath():
+    """
+    Get path using 2 different input methods (Py 3.X vs 2.X)
+    """
+    return input("Specify path: ") if sys.version_info[0] >= 3 else raw_input("Specify path: ")
+
+
+def getFileName():
+    """
+    Get path using 2 different input methods (Py 3.X vs 2.X)
+    """
+    return input("File name: ") if sys.version_info[0] >= 3 else raw_input("File name: ")
+
+
+def readFile(workingDir, fileName):
+    """
+    Check if file name the user input exists or not
+    """
+    if not os.path.exists(os.path.join(workingDir, fileName)):
+        print("File doesn't exist")
+    
+    else:
+        main(workingDir, fileName)
+
 
 def makeFolderName(fileName):
     """
@@ -31,28 +98,31 @@ def makeFolderName(fileName):
     elif exhibit == "TL":
         return "{}/NC/".format(exhibit)
 
-def makeFolder(folder):
-    if not os.path.exists(folder):
-        os.makedirs(folder)
+
+def makeFolder(folderPath):
+    """
+    Simple function to make folder if it doesn't exist
+
+    Input is the folder's path
+    """
+    if not os.path.exists(folderPath):
+        os.makedirs(folderPath)
 
 
-# Main portion starts below:
+# Portion that runs the functions below
+while True:
+    print("------------------------------------")
+    print("Separate a big .txt file into parts.\nSome stuff still specific to NVMM.\n")
+    print('Enter "x" at anytime to quit.')
+    print("------------------------------------")
+    workingDir = getPath()
+    
+    if workingDir == "x":
+        break
 
-for key in contentDict:
+    fileName = getFileName()
 
-    title = contentDict[key][0].replace("\n", "")
-    body = contentDict[key][1:]
+    if fileName == "x":
+        break
 
-    pathName = makeFolderName(key)
-    makeFolder(str(pathName))
-
-    titlePath = os.path.join(pathName, key.upper() + "-T.txt")
-    bodyPath = os.path.join(pathName, key.upper() + "-B.txt")
-
-    with open(titlePath, "w") as wTitleFile:
-        for item in title:
-            wTitleFile.write(item)
-
-    with open(bodyPath, "w") as wBodyFile:
-        for item in body:
-            wBodyFile.write(item)
+    readFile(workingDir, fileName)
