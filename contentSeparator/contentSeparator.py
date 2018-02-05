@@ -31,12 +31,14 @@ def makeFolderName(fileName):
     elif exhibit == "TL":
         return "{}/{}/".format(exhibit, topic.upper())
 
-
 def makeFolder(folder):
     if os.path.exists(folder):
         pass
     else:
         os.makedirs(folder)
+
+
+# Main portion starts below:
 
 for key in contentDict:
 
