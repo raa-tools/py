@@ -29,12 +29,10 @@ def makeFolderName(fileName):
         return "{}/".format(exhibit)
 
     elif exhibit == "TL":
-        return "{}/{}/".format(exhibit, topic.upper())
+        return "{}/NC/".format(exhibit)
 
 def makeFolder(folder):
-    if os.path.exists(folder):
-        pass
-    else:
+    if not os.path.exists(folder):
         os.makedirs(folder)
 
 
