@@ -31,7 +31,7 @@ def main(directory, fileToOpen, outputSubDir):
         title = contentDict[key][0].replace("\n", "")
 
         # Exhibit titles don't have body copy
-        if "ti" in key.split("_")[2]:
+        if "ti" in key.split("_")[2].lower():
             titlePath = os.path.join(pathName, key.upper() + ".txt")
 
         # Everything else is separated into a story title & story body file
