@@ -8,7 +8,7 @@ def main(directory, fileToOpen, outputSubDir):
     Main function that separates content
 
     Uses a couple of helper functions
-    Takes in directory & file to open as params
+    Takes in directory, file to open, and output folder as params
     """
     os.chdir(directory)
 
@@ -90,11 +90,11 @@ def writeFile(pathToFile, itemsInFile):
 while True:
     workingDir, fileName = "", " "
 
-    print("\n------------------------------------")
+    print("\n-------------------------------------")
     print("Separate a big .txt file into parts.")
-    print("Some stuff still specific to NVMM.\n")
+    print("Some stuff may still specific to NVMM.\n")
     print('Enter "x" at anytime to quit.')
-    print("------------------------------------")
+    print("--------------------------------------")
 
     # Get path from user
     while workingDir != "x" and not os.path.exists(workingDir):
