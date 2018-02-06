@@ -6,18 +6,13 @@ Doesn't reformat file to new file type.
 from __future__ import print_function
 import os
 import sys
+from _lib.getInput import getInput
 
 def checkExtension(newExt):
     """
     Makes sure there's a "." before extension name
     """
     return "." + newExt if "." not in newExt else newExt
-
-def getInput(prompt):
-    """
-    Return user input using 2 different methods (Py 3.X vs 2.X)
-    """
-    return input("{} ".format(prompt)) if sys.version_info[0] >= 3 else raw_input("{} ".format(prompt))
 
 
 while True:
