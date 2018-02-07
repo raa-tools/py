@@ -95,7 +95,6 @@ for key in contentDict:
             captionBlock += "\n"
 
     
-
     # Generate a list of credits per caption group
     creditList = []
     for gNum in gNumDict[key]:
@@ -107,7 +106,7 @@ for key in contentDict:
     
     # Generate semicolon-separated credits per caption group
     creditBlock = ("; ".join(creditList))
-    
+
 
     # Finally write some files
     pathName = "TL/CAPS/"
