@@ -2,22 +2,7 @@ from __future__ import print_function
 import os
 from collections import OrderedDict
 import re
-
-def makeFolderName(fileName):
-    """
-    Function to make folders based on file name
-    Returns a path to be used by makeFolder() function
-
-    Currently a little inconsistent with how it treats exhibits
-    """
-
-    exhibit, topic = fileName.split("_")
-
-    if exhibit == "TH":
-        return "{}/CAPTION/".format(exhibit)
-
-    elif exhibit == "TL":
-        return "{}/{}/".format(exhibit, topic.upper())
+import io
 
 
 def makeFolder(folder):
@@ -32,13 +17,14 @@ def makeFolder(folder):
 # Remember to change directory
 os.chdir("/Volumes/3Projects/OVMM-OhioVetMem/02_CONTENT/Exhibit Script_FINAL/Timeline/")
 
-with open("_TL_CAPS.txt", 'rU') as readFile: #.txt file
+with io.open("_TL_CAPS.txt", 'rU', encoding='utf8') as readFile: #.txt file
     inputTextList = readFile.readlines() #Returns a list
 
-with open("_TL_Credits.txt", 'rU') as readFile: #.txt file
+with io.open("_TL_Credits.txt", 'rU', encoding='utf8') as readFile: #.txt file
     inputCreditList = readFile.readlines() #Returns a list    
 
-inputTextList = [text for text in inputTextList if text != "\n"]
+# Clean up inputTextList: get rid of empty items (eg. only newlines and spaces & newline)
+inputTextList = [text for text in inputTextList if text != "\n" and not re.match(r" +\n", text)]
 
 # Generate a list of where content codes appear
 codeIndex = [index for index, entry in enumerate(inputTextList) if "_" in entry]
@@ -84,20 +70,52 @@ for key in creditDict:
         creditDict[key] = creditDict[key][0:-1]
 
 
+# Iterate over contentDict to generate textblocks
+# and write files
 for key in contentDict:
-    creditList = [creditDict[gNum] for gNum in gNumDict[key]]
-    creditString = ("; ".join(creditList))
+    # Generate clean captions for per caption group
+    captionBlock = ""
+    if not capStarterDict[key]:
+        captionBlock = contentDict[key][1] + "\n"
 
-# combinedContent = combineCaptions()
+    elif len(capStarterDict[key]) < 2:
+        for i in range(1, len(contentDict[key]) + 1, 2):
+            captionBlock += contentDict[key][i]
 
+        captionBlock += "\n"
 
+    else:
+        for i in range(len(capStarterDict[key]) - 1):
+            start = capStarterDict[key][i]
+            end = capStarterDict[key][i + 1]
 
-# for key in combinedContent:
-#     pathName = makeFolderName(key)
-#     makeFolder(str(pathName))
+            for j in range(start, end, 2):
+                captionBlock += contentDict[key][j]
 
-#     bodyPath = os.path.join(pathName, key.upper() + "_CP.txt")
+            captionBlock += "\n"
 
-#     with open(bodyPath, "w") as wBodyFile:
-#         for item in combinedContent[key]:
-#             wBodyFile.write(item + "\n")
+    
+
+    # Generate a list of credits per caption group
+    creditList = []
+    for gNum in gNumDict[key]:
+        try:
+            creditList.append(creditDict[gNum.lower()])
+        
+        except KeyError:
+            creditList.append(u"Missing credit for {}".format(gNum))
+    
+    # Generate semicolon-separated credits per caption group
+    creditBlock = ("; ".join(creditList))
+    
+
+    # Finally write some files
+    pathName = "TL/CAPS/"
+
+    makeFolder(pathName)
+
+    captionPath = os.path.join(pathName, key.upper() + ".txt")
+
+    with io.open(captionPath, "w") as captionFile:
+        captionFile.write(captionBlock)
+        captionFile.write(creditBlock)
