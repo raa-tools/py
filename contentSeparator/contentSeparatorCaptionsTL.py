@@ -31,7 +31,7 @@ codeIndex = [index for index, entry in enumerate(inputTextList) if "_" in entry]
 codeIndex.append(len(inputTextList))
 
 # creditDict is {gNumber : credit}
-creditDict = {item.split(",")[0] : item.split(",")[1] for item in inputCreditList}
+creditDict = {item.split(u"\t")[0] : item.split(u"\t")[1] for item in inputCreditList}
 
 # contentDict is {content code : list of captions}
 contentDict = {inputTextList[codeIndex[i]].replace("\n", "").split(" ")[0] :\
@@ -104,17 +104,27 @@ for key in contentDict:
         except KeyError:
             creditList.append(u"Missing credit for {}".format(gNum))
     
+    # Get rid of credits that end in " "
+    creditList = [credit[:-1] if credit[-1] == " " else credit for credit in creditList]
+
+    # Get rid of leading & trailing quotatio marks
+    creditList = [credit[1:-1] if credit[0] == '"' and credit[-1] == '"' else credit for credit in creditList]
+
     # Generate semicolon-separated credits per caption group
     creditBlock = ("; ".join(creditList))
 
+    print(key)
+    print(captionBlock)
+    print(creditBlock)
+    print("\n------------------------------------------------------------\n")
 
     # Finally write some files
-    pathName = "TL/CAPS/"
+    # pathName = "TL/CAPS/"
 
-    makeFolder(pathName)
+    # makeFolder(pathName)
 
-    captionPath = os.path.join(pathName, key.upper() + ".txt")
+    # captionPath = os.path.join(pathName, key.upper() + ".txt")
 
-    with io.open(captionPath, "w") as captionFile:
-        captionFile.write(captionBlock)
-        captionFile.write(creditBlock)
+    # with io.open(captionPath, "w") as captionFile:
+    #     captionFile.write(captionBlock)
+    #     captionFile.write(creditBlock)
