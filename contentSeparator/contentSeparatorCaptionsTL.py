@@ -2,7 +2,6 @@ from __future__ import print_function
 import os
 from collections import OrderedDict
 import re
-import io
 
 
 def makeFolder(folder):
@@ -17,10 +16,10 @@ def makeFolder(folder):
 # Remember to change directory
 os.chdir("/Volumes/3Projects/OVMM-OhioVetMem/02_CONTENT/Exhibit Script_FINAL/Timeline/")
 
-with io.open("_TL_CAPS.txt", 'rU', encoding='utf8') as readFile: #.txt file
+with open("_TL_CAPS.txt", 'rU') as readFile: #.txt file
     inputTextList = readFile.readlines() #Returns a list
 
-with io.open("_TL_Credits.txt", 'rU', encoding='utf8') as readFile: #.txt file
+with open("_TL_Credits.txt", 'rU') as readFile: #.txt file
     inputCreditList = readFile.readlines() #Returns a list    
 
 # Clean up inputTextList: get rid of empty items (eg. only newlines and spaces & newline)
@@ -31,7 +30,7 @@ codeIndex = [index for index, entry in enumerate(inputTextList) if "_" in entry]
 codeIndex.append(len(inputTextList))
 
 # creditDict is {gNumber : credit}
-creditDict = {item.split(u"\t")[0] : item.split(u"\t")[1] for item in inputCreditList}
+creditDict = {item.split("\t")[0] : item.split("\t")[1] for item in inputCreditList}
 
 # contentDict is {content code : list of captions}
 contentDict = {inputTextList[codeIndex[i]].replace("\n", "").split(" ")[0] :\
@@ -69,31 +68,39 @@ for key in creditDict:
     if creditDict[key][-1] == "\n":
         creditDict[key] = creditDict[key][0:-1]
 
+# Empty this file
+comboText = "_TL_CAPS_withCredits.txt"
+with open(comboText, "w+") as comboFile:
+    comboFile.write("")
 
 # Iterate over contentDict to generate textblocks
 # and write files
 for key in contentDict:
+    capStarters = capStarterDict[key]
+
     # Generate clean captions for per caption group
     captionBlock = ""
-    if not capStarterDict[key]:
+    if not capStarters:
         captionBlock = contentDict[key][1] + "\n"
 
-    elif len(capStarterDict[key]) < 2:
+    elif len(capStarters) < 2:
         for i in range(1, len(contentDict[key]) + 1, 2):
             captionBlock += contentDict[key][i]
 
         captionBlock += "\n"
 
     else:
-        for i in range(len(capStarterDict[key]) - 1):
-            start = capStarterDict[key][i]
-            end = capStarterDict[key][i + 1]
+        for i in range(len(capStarters) - 1):
+            start = capStarters[i]
+            end = capStarters[i + 1]
 
             for j in range(start, end, 2):
                 captionBlock += contentDict[key][j]
 
             captionBlock += "\n"
-
+        
+        # Add the content of the last index
+        captionBlock += contentDict[key][capStarters[-1]] + "\n"
     
     # Generate a list of credits per caption group
     creditList = []
@@ -102,29 +109,33 @@ for key in contentDict:
             creditList.append(creditDict[gNum.lower()])
         
         except KeyError:
-            creditList.append(u"Missing credit for {}".format(gNum))
+            creditList.append("Missing credit for {}".format(gNum))
     
-    # Get rid of credits that end in " "
-    creditList = [credit[:-1] if credit[-1] == " " else credit for credit in creditList]
-
-    # Get rid of leading & trailing quotatio marks
-    creditList = [credit[1:-1] if credit[0] == '"' and credit[-1] == '"' else credit for credit in creditList]
+    # Get rid of credits that end in and empty space & strip quote marks
+    creditList = [credit[:-1].strip('"') if credit[-1] == " " else credit.strip('"') for credit in creditList]
 
     # Generate semicolon-separated credits per caption group
     creditBlock = ("; ".join(creditList))
 
-    print(key)
-    print(captionBlock)
-    print(creditBlock)
-    print("\n------------------------------------------------------------\n")
 
     # Finally write some files
-    # pathName = "TL/CAPS/"
+    pathName = "TL/CAPS/"
 
-    # makeFolder(pathName)
+    makeFolder(pathName)
 
-    # captionPath = os.path.join(pathName, key.upper() + ".txt")
+    captionPath = os.path.join(pathName, key.upper() + ".txt")
 
-    # with io.open(captionPath, "w") as captionFile:
-    #     captionFile.write(captionBlock)
-    #     captionFile.write(creditBlock)
+    with open(captionPath, "w") as captionFile:
+        captionFile.write(captionBlock)
+        captionFile.write("\n" + creditBlock)
+
+
+    # Append to combo file:
+    with open(comboText, "a+") as comboFile:
+        comboFile.write(key + "\n\n")
+        comboFile.write(captionBlock)
+        comboFile.write("\n" + creditBlock)
+        comboFile.write("\n\n------------------------------------------------------------\n\n")
+
+    print("File {}.txt written".format(key))
+    
