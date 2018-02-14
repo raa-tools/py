@@ -91,18 +91,19 @@ for key in contentDict:
         # captionBlock += "\n"
 
     else:
-        for i in range(len(capStarters) - 1):
+        for i in range(len(capStarters)):
             start = capStarters[i]
-            end = capStarters[i + 1]
+
+            # Quick fix to circumvent IndexError (when end = i+1)
+            if capStarters[i] == capStarters[-1]:
+                end = len(contentDict[key])
+            else:
+                end = capStarters[i + 1]
 
             for j in range(start, end, 2):
                 captionBlock += contentDict[key][j] + "\n"
 
             captionBlock += "---\n\n"
-        
-        # Add the content from the last capStarter to the end of contentDict
-        for x in range(capStarters[-1], len(contentDict[key]), 2):
-            captionBlock += contentDict[key][x] + "\n"
     
     # Generate a list of credits per caption group
     creditList = []
