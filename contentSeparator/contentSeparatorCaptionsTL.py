@@ -69,7 +69,7 @@ for key in creditDict:
         creditDict[key] = creditDict[key][0:-1]
 
 # Empty this file
-comboText = "_TL_CAPS_withCredits.txt"
+comboText = "_TL_CAPS_combo.txt"
 with open(comboText, "w+") as comboFile:
     comboFile.write("")
 
@@ -77,6 +77,7 @@ with open(comboText, "w+") as comboFile:
 # and write files
 for key in contentDict:
     capStarters = capStarterDict[key]
+    gNums = gNumDict[key]
 
     # Generate clean captions for per caption group
     captionBlock = ""
@@ -95,9 +96,9 @@ for key in contentDict:
             end = capStarters[i + 1]
 
             for j in range(start, end, 2):
-                captionBlock += contentDict[key][j]
+                captionBlock += contentDict[key][j] + "\n"
 
-            captionBlock += "\n"
+            captionBlock += "---\n\n"
         
         # Add the content of the last index
         captionBlock += contentDict[key][capStarters[-1]] + "\n"
@@ -119,22 +120,23 @@ for key in contentDict:
 
 
     # Finally write some files
-    pathName = "TL/CAPS/"
+    # pathName = "TL/CAPS/"
 
-    makeFolder(pathName)
+    # makeFolder(pathName)
 
-    captionPath = os.path.join(pathName, key.upper() + ".txt")
+    # captionPath = os.path.join(pathName, key.upper() + ".txt")
 
-    with open(captionPath, "w") as captionFile:
-        captionFile.write(captionBlock)
-        captionFile.write("\n" + creditBlock)
+    # with open(captionPath, "w") as captionFile:
+    #     captionFile.write(captionBlock)
+    #     captionFile.write("\n" + creditBlock)
 
 
     # Append to combo file:
     with open(comboText, "a+") as comboFile:
-        comboFile.write(key + "\n\n")
-        comboFile.write(captionBlock)
-        comboFile.write("\n" + creditBlock)
+        comboFile.write("------------\n" + key.upper() + "\n------------\n\n")
+        comboFile.write(", ".join(gNums) + "\n\n\n")
+        comboFile.write(captionBlock + "----------\n\n")
+        comboFile.write(creditBlock)
         comboFile.write("\n\n------------------------------------------------------------\n\n")
 
     print("File {}.txt written".format(key))
