@@ -69,9 +69,9 @@ for key in creditDict:
         creditDict[key] = creditDict[key][0:-1]
 
 # Empty this file
-comboText = "_TL_CAPS_combo.txt"
-with open(comboText, "w+") as comboFile:
-    comboFile.write("")
+# comboText = "_TL_CAPS_combo.txt"
+# with open(comboText, "w+") as comboFile:
+#     comboFile.write("")
 
 # Iterate over contentDict to generate textblocks
 # and write files
@@ -82,11 +82,11 @@ for key in contentDict:
     # Generate clean captions for per caption group
     captionBlock = ""
     if not capStarters:
-        captionBlock = contentDict[key][1] + "\n"
+        captionBlock = contentDict[key][1] #+ "\n"
 
     elif len(capStarters) < 2:
         for i in range(1, len(contentDict[key]) + 1, 2):
-            captionBlock += contentDict[key][i] + "\n"
+            captionBlock += contentDict[key][i] #+ "\n"
 
         # captionBlock += "\n"
 
@@ -101,9 +101,9 @@ for key in contentDict:
                 end = capStarters[i + 1]
 
             for j in range(start, end, 2):
-                captionBlock += contentDict[key][j] + "\n"
+                captionBlock += contentDict[key][j] #+ "\n"
 
-            captionBlock += "---\n\n"
+            # captionBlock += "\n"
     
     # Generate a list of credits per caption group
     creditList = []
@@ -122,24 +122,24 @@ for key in contentDict:
 
 
     # Finally write some files
-    # pathName = "TL/CAPS/"
+    pathName = "TL/CAPS/"
 
-    # makeFolder(pathName)
+    makeFolder(pathName)
 
-    # captionPath = os.path.join(pathName, key.upper() + ".txt")
+    captionPath = os.path.join(pathName, key.upper() + ".txt")
 
-    # with open(captionPath, "w") as captionFile:
-    #     captionFile.write(captionBlock)
-    #     captionFile.write("\n" + creditBlock)
+    with open(captionPath, "w") as captionFile:
+        captionFile.write(captionBlock)
+        captionFile.write("\n" + creditBlock)
 
 
     # Append to combo file:
-    with open(comboText, "a+") as comboFile:
-        comboFile.write("------------\n" + key.upper() + "\n------------\n\n")
-        comboFile.write(", ".join(gNums) + "\n\n\n")
-        comboFile.write(captionBlock + "----------\n\n")
-        comboFile.write(creditBlock)
-        comboFile.write("\n\n------------------------------------------------------------\n\n")
+    # with open(comboText, "a+") as comboFile:
+    #     comboFile.write("------------\n" + key.upper() + "\n------------\n\n")
+    #     comboFile.write(", ".join(gNums) + "\n\n\n")
+    #     comboFile.write(captionBlock + "----------\n\n")
+    #     comboFile.write(creditBlock)
+    #     comboFile.write("\n\n------------------------------------------------------------\n\n")
 
-    print("File {}.txt written".format(key))
+    # print("File {}.txt written".format(key))
     
