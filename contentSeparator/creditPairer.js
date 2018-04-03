@@ -1,5 +1,5 @@
 const fs = require('fs');
-const dir = "/Volumes/3Projects/OVMM-OhioVetMem/02_CONTENT/Exhibit Script_FINAL/Thematic Displays"
+const dir = "~/Desktop"
 
 const creditFile = `${dir}/....txt`
 const orderFile = `${dir}/....txt`
