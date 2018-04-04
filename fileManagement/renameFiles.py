@@ -28,12 +28,20 @@ def renameFiles(inputDir, inputExt, currentString, newString):
         if f != ".DS_Store":
             fileName, fileExt = os.path.splitext(f)
 
-            if fileExt == fixExt(inputExt):
+            if inputExt == "all" or fileExt == fixExt(inputExt):
                 fileName = fileName.replace(currentString, newString)
 
             newName = "{}{}".format(fileName, fileExt)
             os.rename(f, newName)
 
 # Get arguments from CLI
-print(sys.argv[0] + " running")
-renameFiles(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+
+if sys.argv[1].lower() == "help" or sys.argv[1].lower() == "h":
+    print("Signature: {} directory extension currentString newString".format(sys.argv[0]))
+
+else:
+    try:
+        renameFiles(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+        print(sys.argv[0] + " running")
+    except IndexError:
+        print("Nope! Did you type in the right number of args?")
