@@ -34,7 +34,6 @@ def renameFiles(inputDir, inputExt, currentString, newString):
             newName = "{}{}".format(fileName, fileExt)
             os.rename(f, newName)
 
-# Get arguments from CLI
 
 if sys.argv[1].lower() == "help" or sys.argv[1].lower() == "h":
     print("Signature: {} directory extension currentString newString".format(sys.argv[0]))
@@ -45,3 +44,4 @@ else:
         print(sys.argv[0] + " running")
     except IndexError:
         print("Nope! Did you type in the right number of args?")
+        print("Type in '{} help' to see this script's signature".format(sys.argv[0]))
