@@ -1,25 +1,39 @@
 """
-Use to rename parsed script files in Combat 1 & Combat 2 to match panel codes
+Generic file renaming
+Works from CLI with args:
+ - file dir
+ - file extension
+ - current string to replace
+ - new string
 """
 
 import os
+import sys
 
-# Remember to change directory
-os.chdir("/Users/jesentanadi/Desktop/Ohio Test/Image/-")
+def fixExt(ext):
+    """ (str) -> str
+    Prepend "." to extension if it doesn't start with one
+    """
+    if not ext.startswith("."):
+        return ".{}".format(ext)
+    return ext
 
-for f in os.listdir(os.getcwd()):
-    if f != ".DS_Store":
-        fileName, fileExt = os.path.splitext(f)
+def renameFiles(inputDir, inputExt, currentString, newString):
+    """ (str, str, str, str) -> NoneType
+    Renames files in inputDir with inputExt,
+    replacing currentString with newString
+    """
+    os.chdir(inputDir)
+    for f in os.listdir(os.getcwd()):
+        if f != ".DS_Store":
+            fileName, fileExt = os.path.splitext(f)
 
-        exhibit, topic, story = fileName.split("_")
+            if fileExt == fixExt(inputExt):
+                fileName = fileName.replace(currentString, newString)
 
-        if story[2:4] == "01":
-            topic = "EX10A"
+            newName = "{}{}".format(fileName, fileExt)
+            os.rename(f, newName)
 
-        elif story[2:4] == "02":
-            topic = "EX10B"
-            story = story.replace("02", "01")
-
-        newName = "{}_{}_{}{}".format(exhibit, topic, story, fileExt)
-
-        os.rename(f, newName)
+# Get arguments from CLI
+print(sys.argv[0] + " running")
+renameFiles(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
