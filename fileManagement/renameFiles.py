@@ -41,7 +41,7 @@ try:
         print("Signature: {} directory extension currentString newString".format(sys.argv[0]))
     else:
         renameFiles(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-        print(sys.argv[0] + " running")
+        print("Script running")
 except IndexError:
     print("Nope! Did you type in the right number of args?")
     print("Type in '{} help' to see this script's signature".format(sys.argv[0]))
