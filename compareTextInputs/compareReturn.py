@@ -16,10 +16,10 @@ import os
 
 os.chdir("/Users/jesentanadi/Desktop/") # remember to change directory
 
-with open("TL CG from Indd.txt", 'rU') as rFile1: #.txt file of char set 1
+with open("1.txt", 'rU') as rFile1: #.txt file of char set 1
     inputList1 = rFile1.readlines() #Returns a list
 
-with open("TL CG from RG.txt", 'rU') as rFile2: #.txt file of char set 2
+with open("2.txt", 'rU') as rFile2: #.txt file of char set 2
     inputList2 = rFile2.readlines() #Returns a list
 
 inputList1 = [item.lower() for item in inputList1]
