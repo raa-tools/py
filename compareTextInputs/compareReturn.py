@@ -34,13 +34,13 @@ with open("difference.txt", "w") as wFile:
     inputList2 = [item.replace("\n", "") for item in inputList2]
 
     #Goes through 1st list & compares with 2nd list
-    wFile.write("In Indd:\n")
+    wFile.write("In 1.txt:\n")
     for item in inputList1:
         if item not in inputList2:
             wFile.write(item + "\n")
 
     #Goes through 2nd list & compares with 1st list
-    wFile.write("\n\nIn doc from RG:\n")
+    wFile.write("\n\nIn 2.txt:\n")
     for item in inputList2:
         if item not in inputList1:
             wFile.write(item + "\n")
