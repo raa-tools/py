@@ -82,7 +82,7 @@ def write_csv(items, file_path="./output.csv"):
 
         for row in items:
             # Encode to bytestring 
-            row = [cell.encode('utf-8') for cell in row]
+            row = [cell.encode("utf-8") for cell in row]
             writer.writerow(row)
 
 
