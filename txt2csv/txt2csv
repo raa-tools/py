@@ -73,15 +73,17 @@ def find_longest_entry(cunks_list):
     return longest
 
 
-def write_csv(list_items, file_path="./output.csv"):
+def write_csv(items, file_path="./output.csv"):
     """ Write CSV file to path
     Items is a list, where each item is a CSV row
     """
     with open(file_path, mode="wb+") as out_file:
         writer = csv.writer(out_file, dialect="excel")
 
-        for item in list_items:
-            writer.writerow(item)
+        for row in items:
+            # Encode to bytestring 
+            row = [cell.encode('utf-8') for cell in row]
+            writer.writerow(row)
 
 
 if __name__ == "__main__":
