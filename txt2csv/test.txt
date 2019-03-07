@@ -1,7 +1,104 @@
-12 H
-Text here, Arizona, USA
-another
-
-13 W
-hello world, Blab, Blaa
-yey
+﻿8863
+22 Azurite
+Bisbee, Arizona, USA
+ 
+14043
+16 Allophane
+Bisbee, Arizona, USA
+ 
+17916
+5 Azurite
+Bisbee, Arizona, USA
+ 
+18285
+12 Shattuckite with bisbeeite
+Shattuck Mine, Bisbee, Arizona, USA
+ 
+21475
+2 Bayldonite
+Bisbee, Arizona, USA
+ 
+25795
+19 Aragonite
+Bisbee, Arizona, USA
+Gift of William Earl Dodge
+ 
+25801
+4 Azurite
+Bisbee, Arizona, USA
+ 
+29286
+18 Hetaerolite
+Campbell Shaft, Bisbee, Arizona, USA
+ 
+30592
+20 Conichalcite
+Higgins Mine, Bisbee, Arizona, USA
+ 
+31260
+23 Aurichalcite
+Bisbee, Arizona, USA
+ 
+31511
+21 Siderite
+Bisbee, Arizona, USA
+ 
+34587
+7 Chalcophanite
+Cole Shaft, Bisbee, Arizona, USA
+ 
+37191
+14 Copper
+Bisbee, Arizona, USA
+ 
+37257
+25 Cuprite
+Bisbee, Arizona, USA
+ 
+37304
+10 Cerussite
+Hilltop Mine, Bisbee, Arizona, USA
+ 
+37326
+24 Malachite
+Bisbee, Arizona, USA
+ 
+37396
+3 Mottramite
+Bisbee, Arizona, USA
+ 
+40282
+9 Cyanotrichite
+Bisbee, Arizona, USA
+ 
+49230
+17 Calcite
+Bisbee, Arizona, USA
+Gift of William Earl Dodge
+ 
+56617
+11 Atacamite
+Bisbee, Arizona, USA
+ 
+62588
+6 Calcite
+Bisbee, Arizona, USA
+ 
+83619
+8 Plancheite
+Bisbee, Arizona, USA
+ 
+104560
+15 Malachite
+Czar Mine, Bisbee, Arizona, USA
+Gift of William Earl Dodge
+ 
+112401
+13 Malachite with azurite
+Bisbee, Arizona, USA
+Gift of Dylan & Heather Stolowitz
+ 
+113516
+1 Calcite
+Bisbee, Arizona, USA
+Gift of William Earl Dodge

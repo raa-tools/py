@@ -3,19 +3,24 @@
 from __future__ import print_function
 import argparse
 import csv
+import io
+import re
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("path", help="Path to .txt file")
     parser.add_argument("-n", "--numbered", type=int,
                         help="Indicate whether items are numbered and which line is numbered")
-    parser.add_argument("input_file", help="Path to .txt file")
+    parser.add_argument("-o", "--output", type=str,
+                        help="Specifiy output path")
 
     args = parser.parse_args()
-    input_file_path = args.input_file
+    input_path = args.path
     numbered_line = args.numbered
+    output_path = args.output
 
 
-    with open(input_file_path, "r") as txt_file:
+    with io.open(input_path, mode="r", encoding="utf-8-sig") as txt_file:
         input_text =  txt_file.read()
 
     if numbered_line:
@@ -23,16 +28,19 @@ def main():
     else:
         items = turn_to_list(input_text)
 
-    write_csv("./test1.csv", items)
+    if output_path:
+        write_csv(items, output_path)
+    else:
+        write_csv(items)
 
 
 def turn_to_list(input_str, number_line=0):
-    """ clean up input string
-    in the end, items is a list of lists:
+    """ Clean up input string and returns a list of lists:
     [[12, Name, location], [13, Name, location]]
     """
-    chunks = input_str.split("\n\n")
-    chunks = [chunk.split("\n") for chunk in chunks]
+    chunks = re.sub("\n\s+\n", "\n\n", input_str)
+    chunks = chunks.split("\n\n")
+    chunks = [chunk.splitlines() for chunk in chunks]
 
     if number_line == 0:
         return chunks
@@ -41,17 +49,26 @@ def turn_to_list(input_str, number_line=0):
         for chunk in chunks:
             new_chunk = []
             for index, item in enumerate(chunk):
-                if index == number_line - 1:
+                if index != number_line - 1:
+                    new_chunk.append(item)
+                else:
                     split_line = item.split(" ", 1)
                     new_chunk += split_line
-                else:
-                    new_chunk.append(item)
             
             return_chunks.append(new_chunk)
         return return_chunks
 
 
-def write_csv(file_path, list_items):
+def find_longest_entry(cunks_list):
+    longest = 0
+    for chunk in chunks:
+        if len(chunk) > longest:
+            longest = len(chunk)
+
+    return longest
+
+
+def write_csv(list_items, file_path="./output.csv"):
     """ Write CSV file to path
     Items is a list, where each item is a CSV row
     """
