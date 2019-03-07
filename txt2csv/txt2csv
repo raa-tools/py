@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+import argparse
+import csv
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-n", "--numbered", type=int,
+                        help="Indicate whether items are numbered and which line is numbered")
+    parser.add_argument("input_file", help="Path to .txt file")
+
+    args = parser.parse_args()
+    input_file_path = args.input_file
+    numbered_line = args.numbered
+
+
+    with open(input_file_path, "r") as txt_file:
+        input_text =  txt_file.read()
+
+    items = turn_to_list(input_text)
+
+    write_csv("./test1.csv", items)
+
+
+def turn_to_list(input_str, number_line=0):
+    """ clean up input string
+    in the end, items is a list of lists:
+    [[12, Name, location], [13, Name, location]]
+    """
+    if number_line == 0:
+        chunks = input_str.split("\n\n")
+        return [chunk.split("\n") for chunk in chunks]
+    
+    else:
+        # separate number from line
+        pass
+
+
+def write_csv(file_path, list_items):
+    """ Write CSV file to path
+    Items is a list, where each item is a CSV row
+    """
+    with open(file_path, mode="wb+") as out_file:
+        writer = csv.writer(out_file, dialect="excel")
+
+        for item in list_items:
+            writer.writerow(item)
+
+
+if __name__ == "__main__":
+    main()
+
