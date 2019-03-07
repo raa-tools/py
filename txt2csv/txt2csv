@@ -10,6 +10,7 @@ from __future__ import print_function
 import argparse
 import csv
 import io
+import os
 import re
 
 def main():
@@ -33,11 +34,10 @@ def main():
     else:
         items = turn_to_list(input_text)
 
-    if output_path:
-        write_csv(items, output_path)
-    else:
-        write_csv(items)
+    if not output_path:
+        output_path = os.path.splitext(input_path)[0] + ".csv"
 
+    write_csv(items, output_path)
 
 def turn_to_list(input_str, number_line=0):
     """ Clean up input string and returns a list of lists:
