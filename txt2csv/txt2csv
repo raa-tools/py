@@ -18,7 +18,10 @@ def main():
     with open(input_file_path, "r") as txt_file:
         input_text =  txt_file.read()
 
-    items = turn_to_list(input_text)
+    if numbered_line:
+        items = turn_to_list(input_text, numbered_line)
+    else:
+        items = turn_to_list(input_text)
 
     write_csv("./test1.csv", items)
 
@@ -28,13 +31,24 @@ def turn_to_list(input_str, number_line=0):
     in the end, items is a list of lists:
     [[12, Name, location], [13, Name, location]]
     """
+    chunks = input_str.split("\n\n")
+    chunks = [chunk.split("\n") for chunk in chunks]
+
     if number_line == 0:
-        chunks = input_str.split("\n\n")
-        return [chunk.split("\n") for chunk in chunks]
-    
+        return chunks
     else:
-        # separate number from line
-        pass
+        return_chunks = []
+        for chunk in chunks:
+            new_chunk = []
+            for index, item in enumerate(chunk):
+                if index == number_line - 1:
+                    split_line = item.split(" ", 1)
+                    new_chunk += split_line
+                else:
+                    new_chunk.append(item)
+            
+            return_chunks.append(new_chunk)
+        return return_chunks
 
 
 def write_csv(file_path, list_items):
