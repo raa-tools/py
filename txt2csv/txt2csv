@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+"""
+Converts txt file to csv file.
+Uses py2 for backwards compatibility,
+with some py3 features like print()
+"""
+
 from __future__ import print_function
 import argparse
 import csv
@@ -18,7 +24,6 @@ def main():
     input_path = args.path
     numbered_line = args.numbered
     output_path = args.output
-
 
     with io.open(input_path, mode="r", encoding="utf-8-sig") as txt_file:
         input_text =  txt_file.read()
