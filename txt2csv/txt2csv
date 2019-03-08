@@ -67,15 +67,6 @@ def turn_to_list(input_str, number_line=0):
         return return_chunks
 
 
-def find_longest_entry(cunks_list):
-    longest = 0
-    for chunk in chunks:
-        if len(chunk) > longest:
-            longest = len(chunk)
-
-    return longest
-
-
 def write_csv(items, file_path="./output.csv", exclude_lines=[]):
     """ Write CSV file to path
     Items is a list, where each item is a CSV row
@@ -83,14 +74,36 @@ def write_csv(items, file_path="./output.csv", exclude_lines=[]):
     with open(file_path, mode="wb+") as out_file:
         writer = csv.writer(out_file, dialect="excel")
 
-        for row in items:
-            # Encode to bytestring 
-            if exclude_lines:
-                row = [cell.encode("utf-8") for i, cell in enumerate(row)\
-                       if i + 1 not in exclude_lines]
-            else:
-                row = [cell.encode("utf-8") for cell in row]
-            writer.writerow(row)
+        items = encode_items_utf8(items)
+        print(items)
+
+        # for row in items:
+        #     if exclude_lines:
+        #         row = [cell for i, cell in enumerate(row) if i + 1 not in exclude_lines]
+
+        #     writer.writerow(row)
+
+        # for row in items:
+        #     # Encode to bytestring 
+        #     row = encode_items_utf8(row)
+        #     if exclude_lines:
+        #         row = [cell.encode("utf-8") for i, cell in enumerate(row)\
+        #                if i + 1 not in exclude_lines]
+        #     else:
+        #         row = [cell.encode("utf-8") for cell in row]
+        #     writer.writerow(row)
+
+def encode_items_utf8(items):
+    """ Recursively encode every unicode item in an items list
+    to UTF-8 bytestring
+    """
+    if isinstance(items, list):
+        # print(items)
+        for item in items:
+            encode_items_utf8(item)
+    else:
+        return items.encode("utf-8")
+        # return [item.encode("utf-8") for item in items]
 
 
 if __name__ == "__main__":
