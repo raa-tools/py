@@ -43,21 +43,19 @@ For instance, `txt2csv artifacts1.txt` will convert a text file called `artifact
 
 ## Options
 For a list of all possible options, use:
-#### `txt2csv -h`
-#### or
-#### `txt2csv --help`
+#### `txt2csv -h` OR `txt2csv --help`
 
 ### Specifying output
 By default, the `csv` file will have the same name as the `txt` file. In the above examples, the `csv` file outputted will be `artifacts1.csv` and `~/Desktop/new_artifacts.csv`. To specify a different output file name and/or file path, use the `-o` flag:
 
-####`txt2csv amnh1.txt -o ~/Desktop/artifact_case1.csv` or `txt2csv amnh1.txt --output ~/Desktop/artifact_case1.csv`
+####`txt2csv amnh1.txt -o ~/Desktop/artifact_case1.csv` OR `txt2csv amnh1.txt --output ~/Desktop/artifact_case1.csv`
 
 In that example, our input is `amnh1.txt`, located in the current directory, and the output is `artifact_case1.csv` located on the Desktop.
 
 ### Separating inline numbers
 If the input data has inline numbering, the numbers will need to be separated into their own column for sorting. To do that, use the `-n` flag, followed by the location of the inline numbers (the line number).
 
-####`txt2csv artifacts.txt -n 2` or `txt2csv artifacts.txt --numbered 2`
+####`txt2csv artifacts.txt -n 2` OR `txt2csv artifacts.txt --numbered 2`
 
 The line above specifies inline numbering at line number **2** and will convert:
 ```
@@ -78,7 +76,7 @@ to:
 ### Excluding lines
 While processing data, `txt2csv` can ignore a list of line numbers and exclude them from the final `csv` file. Every line number listed has to exist in every chunk, otherwise an error will be thrown.
 
-####`txt2csv artifacts.txt -x 1 4` or `txt2csv artifacts.txt --exclude 1 4`
+####`txt2csv artifacts.txt -x 1 4` OR `txt2csv artifacts.txt --exclude 1 4`
 
 The line above specifies that lines 1 and 3 from every chunk should be ignored, converting:
 ```
