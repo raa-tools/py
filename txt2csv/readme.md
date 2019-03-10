@@ -16,14 +16,20 @@ Shattuck Mine, Bisbee, Arizona, USA
 
 Will be converted to:  
 ```
+-------------------------------------------------------------------------------
 17916 | 5 Azurite                     | Bisbee, Arizona, USA
+-------------------------------------------------------------------------------
 18285 | 12 Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA
+-------------------------------------------------------------------------------
 ```
 or:
 
 ```
+-------------------------------------------------------------------------------
 17916 | 5  | Azurite                    | Bisbee, Arizona, USA
+-------------------------------------------------------------------------------
 18285 | 12 | Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA
+-------------------------------------------------------------------------------
 ```
 
 ## Installation
@@ -74,8 +80,11 @@ Shattuck Mine, Bisbee, Arizona, USA
 ```
 to:
 ```
+--------------------------------------------------------------------------------
 17916 | 5  | Azurite                    | Bisbee, Arizona, USA
+--------------------------------------------------------------------------------
 18285 | 12 | Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA
+--------------------------------------------------------------------------------
 ```
 
 ### Excluding lines
@@ -97,7 +106,51 @@ Courtesty of another donor
 ```
 to:
 ```
+--------------------------------------
 5  | Azurite
+--------------------------------------
 12 | Shattuckite with bisbeeite
+--------------------------------------
+```
+
+### All together
+#### `txt2csv artifacts.txt -o ~/Desktop/output.csv -x 2 -n 1 -k 1 3`
+
+Given `artifacts.txt` with the following content:
+```
+22 Azurite
+8863
+Bisbee, Arizöna, USA
+ 
+16 H₂O⁸
+14043
+Bisbee, Arizona, USA
+ 
+5 Azurite
+17916
+Bisbee, Arizona, USA
+
+19 Aragonite
+25795
+Bisbee, Arizona, USA
+Gift of William Earl Dodge
+```
+
+Running the command above will return an `output.csv` file on the Desktop, with the following content (when opened in Google Sheets):
+```
+----------------------------------
+22 | Azurite
+   | Bisbee, Arizöna, USA
+----------------------------------
+16 | H₂O⁸
+   | Bisbee, Arizona, USA
+----------------------------------
+ 5 | Azurite 
+   | Bisbee, Arizona, USA
+----------------------------------
+19 | Aragonite
+   | Bisbee, Arizona, USA
+   | Gift of William Earl Dodge
+----------------------------------
 ```
 
