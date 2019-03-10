@@ -23,12 +23,15 @@ def main():
                         help="Specify which line(s) to exclude")
     parser.add_argument("-o", "--output", type=str,
                         help="Specifiy output path")
+    parser.add_argument("-k", "--keep_together", type=int, nargs="*",
+                        help="Specify which lines should be kept together")
 
     args = parser.parse_args()
     input_path = args.path
     numbered_line = args.numbered
-    exclude_lines = args.exclude
+    lines_to_exclude = args.exclude
     output_path = args.output
+    keep_together = args.keep_together
 
     # Input check
     if not os.path.exists(input_path):
@@ -49,7 +52,7 @@ def main():
     items = turn_to_list(input_text)
 
     # Make sure user isn't asking to exclude lines beyond shortest chunk
-    if exclude_lines and max(exclude_lines) > find_shortest(items):
+    if lines_to_exclude and max(lines_to_exclude) > find_shortest(items):
         print("Excluded lines out of range: {} is the shortest chunk size".format(shortest_chunk))
         sys.exit(1)
 
@@ -57,8 +60,16 @@ def main():
     if numbered_line:
         items = separate_numbered(items, numbered_line)
 
+    # Keep listed lines together in one cell
+    if keep_together:
+        items = combine_lines(items, keep_together)
+
+    # Exclude lines specified by user
+    if lines_to_exclude:
+        items = exclude_lines(items, lines_to_exclude)
+
     # All done processing, write to file
-    write_csv(items, exclude_lines, output_path)
+    write_csv(items, output_path)
 
 
 def find_shortest(items_list):
@@ -91,26 +102,64 @@ def separate_numbered(chunks, number_line):
             if index != number_line - 1:
                 new_chunk.append(item)
             else:
-                split_line = item.split(" ", 1)
-                new_chunk += split_line
-        
+                new_chunk.append(item.split(" ", 1))
         return_chunks.append(new_chunk)
     return return_chunks
 
 
-def write_csv(items, exclude_cells, file_path="./output.csv"):
-    """ Write CSV file to path
+def combine_lines(items_list, lines_to_combine):
+    """ Combine lines
+    [[1, "Name\nlocation\ndonor"], [2, "Name\nlocation\ndonor"]]
+    """
+    return_list = []
+    for chunk in items_list:
+        new_chunk = []
+        combo_str = ""
+        first_str = True
+        for index, item in enumerate(chunk):
+            if index + 1 in lines_to_combine:
+                # If item is a list, it's probably an inline
+                # number that's been split, eg: [1, "Calcite"]
+                # so keep number in its own cell and combine the rest
+                if isinstance(item, list):
+                    new_chunk.append(item[0])
+                    item = item[1]
+
+                # This is just so we have \n separating each line
+                if first_str:
+                    combo_str += item
+                    first_str = False
+                else:
+                    combo_str += "\n" + item
+            else:
+                new_chunk.append(item)
+        new_chunk.append(combo_str)
+        return_list.append(new_chunk)
+    return return_list
+
+
+def exclude_lines(items_list, exclusion):
+    """ Return new list without excluded lines
+    """
+    return_list = []
+    for chunk in items_list:
+        new_chunk = [item for i, item in enumerate(chunk)\
+                     if i + 1 not in exclusion]
+        return_list.append(new_chunk)
+    return return_list
+
+
+def write_csv(items, file_path="./output.csv"):
+    """ Flatten & encode items, write CSV file to path
     Items is a list, where each item is a CSV row
     """
+    items = [flatten(item) for item in items]
+    items = encode_items_utf8(items)
+
     with open(file_path, mode="wb+") as out_file:
         writer = csv.writer(out_file, dialect="excel")
-        items = encode_items_utf8(items)
 
         for row in items:
-            if exclude_cells:
-                row = [cell for i, cell in enumerate(row)\
-                       if i + 1 not in exclude_cells]
-
             writer.writerow(row)
 
 
@@ -124,6 +173,19 @@ def encode_items_utf8(items, collection=[]):
             return_list.append(encode_items_utf8(item))
         else:
             return_list.append(item.encode("utf-8"))
+    return return_list
+
+
+def flatten(items_list):
+    """ Recursively flatten & return one list.
+    [[1, "Name"], "Location", "Donor"] --> [1, "Name", "Location", "Donor"]
+    """
+    return_list = []
+    for item in items_list:
+        if isinstance(item, list):
+            return_list += flatten(item)
+        else:
+            return_list.append(item)
     return return_list
 
 
