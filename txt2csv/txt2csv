@@ -23,7 +23,7 @@ def main():
                         help="Specify which line(s) to exclude")
     parser.add_argument("-o", "--output", type=str,
                         help="Specifiy output path")
-    parser.add_argument("-k", "--keep_together", type=int, nargs="*",
+    parser.add_argument("-t", "--keep-together", type=int, nargs="*",
                         help="Specify which lines should be kept together")
 
     args = parser.parse_args()

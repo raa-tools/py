@@ -113,8 +113,37 @@ to:
 --------------------------------------
 ```
 
+### Keeping lines together
+#### `txt2csv artifacts.txt -t 2 3` OR `txt2csv artifacts.txt --keep-together 2 3`
+The `-t` or `--keep-together` flag will keep the specified lines together in a single cell. Given the following input:
+```
+22
+Azurite
+Bisbee, Arizona, USA
+ 
+16
+Aragonite
+Bisbee, Arizona, USA
+```
+The command above will keep lines **2** and **3** in one cell, with each item separated by a line break, so the result will be:
+```
+-----------------------------
+22 | Azurite
+   | Bisbee, Arizona, USA
+-----------------------------
+16 | Aragonite
+   | Bisbee, Arizona, USA
+-----------------------------
+```
+
 ### All together
-#### `txt2csv artifacts.txt -o ~/Desktop/output.csv -x 2 -n 1 -k 1 3`
+#### `txt2csv artifacts.txt -o ~/Desktop/output.csv -n 1 -x 2 -t 1 3`
+The command above will `artifacts.txt`, outputting `output.csv` on the Desktop. 
+
+The following options are specified:
+- There is inline numbering on line **1**.
+- Line **2** will be excluded.
+- Lines **1** and **3** will be kept together. Because line 1 has inline numbering, only the elements after the number will be kept with line 3.
 
 Given `artifacts.txt` with the following content:
 ```
