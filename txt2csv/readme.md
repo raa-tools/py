@@ -43,7 +43,9 @@ For instance, `txt2csv artifacts1.txt` will convert a text file called `artifact
 
 ## Options
 For a list of all possible options, use:
-#### `txt2csv -h` or `txt2csv --help`
+#### `txt2csv -h`
+#### or
+#### `txt2csv --help`
 
 ### Specifying output
 By default, the `csv` file will have the same name as the `txt` file. In the above examples, the `csv` file outputted will be `artifacts1.csv` and `~/Desktop/new_artifacts.csv`. To specify a different output file name and/or file path, use the `-o` flag:
