@@ -29,7 +29,7 @@ or:
 ## Installation
 Best to place executable file (`txt2csv`) in `~/bin`. Remember to add `~/bin` to `$PATH`.
 
-## Creating `txt` files
+## Creating txt files
 To create `txt` file from a `doc` or `docx` file, it's best to copy and paste the contents to a new file created in an app like TextEdit. Remember to remove formatting.
 
 Don't "Save As" in Word because it doesn't create a clean enough `txt` file for this program.
