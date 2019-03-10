@@ -78,7 +78,7 @@ While processing data, `txt2csv` can ignore a list of line numbers and exclude t
 
 ####`txt2csv artifacts.txt -x 1 4` OR `txt2csv artifacts.txt --exclude 1 4`
 
-The line above specifies that lines 1 and 3 from every chunk should be ignored, converting:
+The line above specifies that lines **1** and **4** from every chunk should be ignored, converting:
 ```
 17916
 Azurite
