@@ -19,6 +19,12 @@ Will be converted to:
 17916 | 5 Azurite                     | Bisbee, Arizona, USA
 18285 | 12 Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA
 ```
+or:
+
+```
+17916 | 5  | Azurite                    | Bisbee, Arizona, USA
+18285 | 12 | Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA
+```
 
 ## Installation
 Best to place executable file (`txt2csv`) in `~/bin`. Remember to add `~/bin` to `$PATH`.
@@ -31,18 +37,62 @@ Subscripts and superscripts will work if they're not "fake" (ie. if they're Unic
 [More information on Unicode sub/superscripts](https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts).
 
 ## Basic Usage
-`txt2csv path/to/file.txt`
+####`txt2csv path/to/file.txt`
 
 For instance, `txt2csv artifacts1.txt` will convert a text file called `artifacts1.txt` inside of the current directory. Alternatively, `txt2csv ~/Desktop/new_artifacts.txt` will convert a text file called `new_artifacts.txt` on the Desktop.
 
 ## Options
-### Specifying output
-By default, the `csv` file will have the same name as the `txt` file. In the above examples, the `csv` file outputted will be `artifacts1.csv` and `~/Desktop/new_artifacts.csv`. 
+For a list of all possible options, use:
+#### `txt2csv -h` or `txt2csv --help`
 
-To specify a different output file name and/or file path, use the `-o` flag:
-`txt2csv amnh1.txt -o ~/Desktop/artifact_case1.csv`
+### Specifying output
+By default, the `csv` file will have the same name as the `txt` file. In the above examples, the `csv` file outputted will be `artifacts1.csv` and `~/Desktop/new_artifacts.csv`. To specify a different output file name and/or file path, use the `-o` flag:
+
+####`txt2csv amnh1.txt -o ~/Desktop/artifact_case1.csv` or `txt2csv amnh1.txt --output ~/Desktop/artifact_case1.csv`
 
 In that example, our input is `amnh1.txt`, located in the current directory, and the output is `artifact_case1.csv` located on the Desktop.
 
 ### Separating inline numbers
+If the input data has inline numbering, the numbers will need to be separated into their own column for sorting. To do that, use the `-n` flag, followed by the location of the inline numbers (the line number).
+
+####`txt2csv artifacts.txt -n 2` or `txt2csv artifacts.txt --numbered 2`
+
+The line above specifies inline numbering at line number **2** and will convert:
+```
+17916
+5 Azurite
+Bisbee, Arizona, USA
+ 
+18285
+12 Shattuckite with bisbeeite
+Shattuck Mine, Bisbee, Arizona, USA
+```
+to:
+```
+17916 | 5  | Azurite                    | Bisbee, Arizona, USA
+18285 | 12 | Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA
+```
+
+### Excluding lines
+While processing data, `txt2csv` can ignore a list of line numbers and exclude them from the final `csv` file. Every line number listed has to exist in every chunk, otherwise an error will be thrown.
+
+####`txt2csv artifacts.txt -x 1 4` or `txt2csv artifacts.txt --exclude 1 4`
+
+The line above specifies that lines 1 and 3 from every chunk should be ignored, converting:
+```
+17916
+Azurite
+Bisbee, Arizona, USA
+Courtesy of some donor
+ 
+18285
+Shattuckite with bisbeeite
+Shattuck Mine, Bisbee, Arizona, USA
+Courtesty of another donor
+```
+to:
+```
+5  | Azurite
+12 | Shattuckite with bisbeeite
+```
 
