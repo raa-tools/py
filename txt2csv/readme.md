@@ -141,9 +141,9 @@ The command above will keep lines **2** and **3** in one cell, with each item se
 The command above will `artifacts.txt`, outputting `output.csv` on the Desktop. 
 
 The following options are specified:
-* There is inline numbering on line **1**.
-* Line **2** will be excluded.
-* Lines **1** and **3** will be kept together. Because line 1 has inline numbering, only the elements after the number will be kept with line 3.
++ There is inline numbering on line **1**.
++ Line **2** will be excluded.
++ Lines **1** and **3** will be kept together. Because line 1 has inline numbering, only the elements after the number will be kept with line 3.
 
 Given `artifacts.txt` with the following content:
 ```
