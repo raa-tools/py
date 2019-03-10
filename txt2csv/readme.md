@@ -17,11 +17,11 @@ Shattuck Mine, Bisbee, Arizona, USA
 Will be converted to:  
 
 | 17916 | 5 Azurite                     | Bisbee, Arizona, USA                |
-|-------|-------------------------------|-------------------------------------|
 | 18285 | 12 Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA |
+
 or:
+
 | 17916 | 5  | Azurite                    | Bisbee, Arizona, USA                |
-|-------|----|----------------------------|-------------------------------------|
 | 18285 | 12 | Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA |
 
 ## Installation
