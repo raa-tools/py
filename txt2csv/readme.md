@@ -29,10 +29,15 @@ or:
 ## Installation
 Best to place executable file (`txt2csv`) in `~/bin`. Remember to add `~/bin` to `$PATH`.
 
-## Text formatting
-`txt2csv` takes in any UTF-8-encoded text file. This means that any character that can be represented with Unicode *should* be supported, including diacritics. 
+## Creating `txt` files
+To create `txt` file from a `doc` or `docx` file, it's best to copy and paste the contents to a new file created in an app like TextEdit. Remember to remove formatting.
 
-Subscripts and superscripts will work if they're not "fake" (ie. if they're Unicode sub/superscripts, not rich-text-formatted sub/superscripts). In Word, sub/superscripts accessed through the sub/superscript buttons tend to not be real Unicode characters, so any formatting will be lost when converted to a `txt` file. If possible, those should be converted to Unicode characters prior to saving as a `txt` file, or they can be surrounded by `<sub></sub>` or `<super></super>` tags.
+Don't "Save As" in Word because it doesn't create a clean enough `txt` file for this program.
+
+## Text formatting
+`txt2csv` takes in any UTF-8-encoded `txt` file. This means that any character that can be represented with Unicode *should* be supported, including diacritics. 
+
+Subscripts and superscripts will work if they're not "fake" (ie. if they're Unicode characters, not rich-text- or application-formatted sub/superscripts). In Word, sub/superscripts accessed through the toolbar buttons tend to not be real Unicode characters, so any formatting will be lost when converted to a `txt` file. If possible, those should be converted to Unicode characters prior to saving as a `txt` file, or they can be surrounded by `<sub></sub>` or `<super></super>` tags.
 
 [More information on Unicode sub/superscripts](https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts).
 
