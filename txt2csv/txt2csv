@@ -12,6 +12,7 @@ import csv
 import io
 import os
 import re
+import sys
 
 def main():
     parser = argparse.ArgumentParser()
@@ -29,45 +30,75 @@ def main():
     exclude_lines = args.exclude
     output_path = args.output
 
+    # Input check
+    if not os.path.exists(input_path):
+        print("{} doesn't exist. Any typo?".format(input_path))
+        sys.exit(1)
+
+    # Output check
+    if not output_path:
+        output_path = os.path.splitext(input_path)[0] + ".csv"
+    elif os.path.splitext(output_path)[1] != ".csv":
+        print("Output path must end in .csv")
+        sys.exit(1)
+
+    # I/O ok, let's do some work
     with io.open(input_path, mode="r", encoding="utf-8-sig") as txt_file:
         input_text =  txt_file.read().strip()
 
+    items = turn_to_list(input_text)
+
+    # Make sure user isn't asking to exclude lines beyond shortest chunk
+    if exclude_lines and max(exclude_lines) > find_shortest(items):
+        print("Excluded lines out of range: {} is the shortest chunk size".format(shortest_chunk))
+        sys.exit(1)
+
+    # Separate inline numbering if user asks for it
     if numbered_line:
-        items = turn_to_list(input_text, numbered_line)
-    else:
-        items = turn_to_list(input_text)
+        items = separate_numbered(items, numbered_line)
 
-    if not output_path:
-        output_path = os.path.splitext(input_path)[0] + ".csv"
+    # All done processing, write to file
+    write_csv(items, exclude_lines, output_path)
 
-    write_csv(items, output_path, exclude_lines)
 
-def turn_to_list(input_str, number_line=0):
-    """ Clean up input string and returns a list of lists:
-    [[12, Name, location], [13, Name, location]]
+def find_shortest(items_list):
+    """ Find shortest chunk length
     """
-    chunks = re.sub("\n\s+\n", "\n\n", input_str)
+    shortest = len(items_list[0])
+    for item in items_list:
+        if len(item) < shortest:
+            shortest = len(item)
+    return shortest
+        
+
+def turn_to_list(input_str):
+    """ Clean up input string and returns a list of lists:
+    [[id #, 12 Name, location], [id#, 13 Name, location]]
+    """
+    chunks = re.sub("\n\s*\n", "\n\n", input_str)
     chunks = chunks.split("\n\n")
-    chunks = [chunk.splitlines() for chunk in chunks]
-
-    if number_line == 0:
-        return chunks
-    else:
-        return_chunks = []
-        for chunk in chunks:
-            new_chunk = []
-            for index, item in enumerate(chunk):
-                if index != number_line - 1:
-                    new_chunk.append(item)
-                else:
-                    split_line = item.split(" ", 1)
-                    new_chunk += split_line
-            
-            return_chunks.append(new_chunk)
-        return return_chunks
+    return [chunk.splitlines() for chunk in chunks]
 
 
-def write_csv(items, file_path="./output.csv", exclude_cells=[]):
+def separate_numbered(chunks, number_line):
+    """ Separate inline numbering into its own cell
+    [[id #, 12, Name, location], [id#, 13, Name, location]]
+    """
+    return_chunks = []
+    for chunk in chunks:
+        new_chunk = []
+        for index, item in enumerate(chunk):
+            if index != number_line - 1:
+                new_chunk.append(item)
+            else:
+                split_line = item.split(" ", 1)
+                new_chunk += split_line
+        
+        return_chunks.append(new_chunk)
+    return return_chunks
+
+
+def write_csv(items, exclude_cells, file_path="./output.csv"):
     """ Write CSV file to path
     Items is a list, where each item is a CSV row
     """
