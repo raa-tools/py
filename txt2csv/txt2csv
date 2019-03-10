@@ -30,7 +30,7 @@ def main():
     output_path = args.output
 
     with io.open(input_path, mode="r", encoding="utf-8-sig") as txt_file:
-        input_text =  txt_file.read()
+        input_text =  txt_file.read().strip()
 
     if numbered_line:
         items = turn_to_list(input_text, numbered_line)
