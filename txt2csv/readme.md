@@ -3,7 +3,8 @@ Simple command-line tool to convert `txt` files to `csv` (comma-separated values
 
 `txt2csv` treats each "chunk" of data (separated by an empty newline) as 1 row and each line within the chunk as 1 column.
 
-For example:
+For example:  
+```
 17916
 5 Azurite
 Bisbee, Arizona, USA
@@ -11,11 +12,13 @@ Bisbee, Arizona, USA
 18285
 12 Shattuckite with bisbeeite
 Shattuck Mine, Bisbee, Arizona, USA
+```
 
-Will be converted to:
+Will be converted to:  
+```
 17916 | 5 Azurite                     | Bisbee, Arizona, USA
--------------------------------------------------------------------
 18285 | 12 Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA
+```
 
 ## Installation
 Best to place executable file (`txt2csv`) in `~/bin`. Remember to add `~/bin` to `$PATH`.
