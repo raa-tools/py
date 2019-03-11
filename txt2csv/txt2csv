@@ -23,15 +23,15 @@ def main():
                         help="Specify which line(s) to exclude")
     parser.add_argument("-o", "--output", type=str,
                         help="Specifiy output path")
-    parser.add_argument("-t", "--keep-together", type=int, nargs="*",
-                        help="Specify which lines should be kept together")
+    parser.add_argument("-c", "--combine", type=int, nargs="*",
+                        help="Specify which lines should be combined into a single cell")
 
     args = parser.parse_args()
     input_path = args.path
+    output_path = args.output
     numbered_line = args.numbered
     lines_to_exclude = args.exclude
-    output_path = args.output
-    keep_together = args.keep_together
+    lines_to_combine = args.combine
 
     # Input check
     if not os.path.exists(input_path):
@@ -61,8 +61,8 @@ def main():
         items = separate_numbered(items, numbered_line)
 
     # Keep listed lines together in one cell
-    if keep_together:
-        items = combine_lines(items, keep_together)
+    if lines_to_combine:
+        items = combine_lines(items, lines_to_combine)
 
     # Exclude lines specified by user
     if lines_to_exclude:
