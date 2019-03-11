@@ -80,6 +80,11 @@ to:
 | 17916 | 5  | Azurite                    | Bisbee, Arizona, USA                |
 | 18285 | 12 | Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA |
 
+|       |    |                            |                                     |
+|-------|----|----------------------------|-------------------------------------|
+| 17916 | 5  | Azurite                    | Bisbee, Arizona, USA                |
+| 18285 | 12 | Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA |
+
 ### Excluding lines
 While processing data, `txt2csv` can ignore a list of line numbers and exclude them from the final `csv` file. Every line number listed has to exist in every chunk, otherwise an error will be thrown.
 
@@ -116,6 +121,10 @@ Aragonite
 Bisbee, Arizona, USA
 ```
 The command above will keep lines **2** and **3** in one cell, with each item separated by a line break, so the result will be:
+|    |                       | 
+|----|-----------------------|
+| 22 | Azurite<br>Bisbee, Arizona, USA   |
+| 16 | Aragonite<br>Bisbee, Arizona, USA |
 
 ### All together
 #### `txt2csv artifacts.txt -o ~/Desktop/output.csv -n 1 -x 2 -t 1 3`
