@@ -75,10 +75,6 @@ Bisbee, Arizona, USA
 Shattuck Mine, Bisbee, Arizona, USA
 ```
 to:
-|       |    |                            |                                     |
-|-------|----|----------------------------|-------------------------------------|
-| 17916 | 5  | Azurite                    | Bisbee, Arizona, USA                |
-| 18285 | 12 | Shattuckite with bisbeeite | Shattuck Mine, Bisbee, Arizona, USA |
 
 |       |    |                            |                                     |
 |-------|----|----------------------------|-------------------------------------|
@@ -103,6 +99,7 @@ Shattuck Mine, Bisbee, Arizona, USA
 Courtesty of another donor
 ```
 to:
+
 |    |                              |
 |----|------------------------------|
 | 5  | Azurite                      |
@@ -121,6 +118,7 @@ Aragonite
 Bisbee, Arizona, USA
 ```
 The command above will keep lines **2** and **3** in one cell, with each item separated by a line break, so the result will be:
+
 |    |                       | 
 |----|-----------------------|
 | 22 | Azurite<br>Bisbee, Arizona, USA   |
@@ -157,20 +155,11 @@ Gift of William Earl Dodge
 ```
 
 Running the command above will return an `output.csv` file on the Desktop, with the following content (when opened in Google Sheets):
-```
-----------------------------------
-22 | Azurite
-   | Bisbee, Arizöna, USA
-----------------------------------
-16 | H₂O⁸
-   | Bisbee, Arizona, USA
-----------------------------------
- 5 | Azurite 
-   | Bisbee, Arizona, USA
-----------------------------------
-19 | Aragonite
-   | Bisbee, Arizona, USA
-   | Gift of William Earl Dodge
-----------------------------------
-```
+
+|    |                                 |
+|----|---------------------------------|
+| 22 | Azurite<br>Bisbee, Arizöna, USA |
+| 16 | H₂O⁸<br>Bisbee, Arizona, USA    |
+| 5  | Azurite<br>Bisbee, Arizona, USA |
+| 19 | Aragonite<br>Bisbee, Arizona, USA<br>Gift of William Earl Dodge |
 
