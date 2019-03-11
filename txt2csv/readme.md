@@ -105,9 +105,8 @@ to:
 | 5  | Azurite                      |
 | 12 | Shattuckite with bisbeeite   |
 
-### Keeping lines together
-#### `txt2csv artifacts.txt -t 2 3` OR `txt2csv artifacts.txt --keep-together 2 3`
-The `-t` or `--keep-together` flag will keep the specified lines together in a single cell. Given the following input:
+### Combining lines
+The `-c` or `--combine` flag will combine the specified lines together in a single cell. Given the following input:
 ```
 22
 Azurite
@@ -117,6 +116,7 @@ Bisbee, Arizona, USA
 Aragonite
 Bisbee, Arizona, USA
 ```
+#### `txt2csv artifacts.txt -c 2 3` OR `txt2csv artifacts.txt --combine 2 3`
 The command above will keep lines **2** and **3** in one cell, with each item separated by a line break, so the result will be:
 
 |    |                      | 
@@ -127,14 +127,14 @@ The command above will keep lines **2** and **3** in one cell, with each item se
 |    | Bisbee, Arizona, USA |
 
 ### All together
-#### `txt2csv artifacts.txt -o ~/Desktop/output.csv -n 1 -x 2 -t 1 3`
+#### `txt2csv artifacts.txt -o ~/Desktop/output.csv -n 1 -x 2 -c 1 3`
 The command above will `artifacts.txt`, outputting `output.csv` on the Desktop. 
 
 The following options are specified:
 
 *  There is inline numbering on line **1**.
 *  Line **2** will be excluded.
-*  Lines **1** and **3** will be kept together. Because line 1 has inline numbering, only the elements after the number will be kept with line 3.
+*  Lines **1** and **3** will be combined. Because line 1 has inline numbering, only the elements after the number will be combined with line 3.
 
 Given `artifacts.txt` with the following content:
 ```
