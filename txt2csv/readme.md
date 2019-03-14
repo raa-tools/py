@@ -50,7 +50,7 @@ For instance, `txt2csv artifacts1.txt` will convert a text file called `artifact
 
 ## Options
 For a list of all possible options, use:
-#### `txt2csv -h` OR `txt2csv --help`
+####`txt2csv -h` OR `txt2csv --help`
 
 ### Specifying output
 By default, the `csv` file will have the same name as the `txt` file. In the above examples, the `csv` file outputted will be `artifacts1.csv` and `~/Desktop/new_artifacts.csv`. To specify a different output file name and/or file path, use the `-o` flag:
@@ -116,7 +116,7 @@ Bisbee, Arizona, USA
 Aragonite
 Bisbee, Arizona, USA
 ```
-#### `txt2csv artifacts.txt -c 2 3` OR `txt2csv artifacts.txt --combine 2 3`
+####`txt2csv artifacts.txt -c 2 3` OR `txt2csv artifacts.txt --combine 2 3`
 The command above will keep lines **2** and **3** in one cell, with each item separated by a line break, so the result will be:
 
 |    |                      | 
@@ -127,7 +127,7 @@ The command above will keep lines **2** and **3** in one cell, with each item se
 |    | Bisbee, Arizona, USA |
 
 ### All together
-#### `txt2csv artifacts.txt -o ~/Desktop/output.csv -n 1 -x 2 -c 1 3`
+####`txt2csv artifacts.txt -o ~/Desktop/output.csv -n 1 -x 2 -c 1 3`
 The command above will `artifacts.txt`, outputting `output.csv` on the Desktop. 
 
 The following options are specified:
