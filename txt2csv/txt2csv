@@ -34,8 +34,8 @@ def main():
     lines_to_combine = args.combine
 
     # Input check
-    if not os.path.exists(input_path):
-        print("{} doesn't exist. Any typo?".format(input_path))
+    if os.path.splitext(input_path)[1] != ".txt":
+        print("Input path must be a .txt file")
         sys.exit(1)
 
     # Output check
@@ -45,9 +45,14 @@ def main():
         print("Output path must end in .csv")
         sys.exit(1)
 
-    # I/O ok, let's do some work
-    with io.open(input_path, mode="r", encoding="utf-8-sig") as txt_file:
-        input_text =  txt_file.read().strip()
+    # Try opening input file
+    # Use try/except instead of seeing if a file exists to circumvent race condition
+    try:
+        with io.open(input_path, mode="r", encoding="utf-8-sig") as txt_file:
+            input_text =  txt_file.read().strip()
+    except IOError:
+        print("{} doesn't exist. Any typo?".format(input_path))
+        sys.exit(1)
 
     items = turn_to_list(input_text)
 
