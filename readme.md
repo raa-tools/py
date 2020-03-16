@@ -8,6 +8,3 @@ Hopefully the latter can be cleaned up & made more user-friendly...
 * camelCase for all dirs, modules, non-class names.
 * PascalCase for all classes
 
-## To-dos:
-* Might need some lib log to keep track of things?
-* Organization needs some rethinking
